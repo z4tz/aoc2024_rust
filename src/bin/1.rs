@@ -3,9 +3,9 @@ use std::time::Instant;
 use num::abs;
 
 fn main() {
-    let content = aoc_reader(1);
+    let data = aoc_reader(1);
     let start = Instant::now(); // skip file IO in timing
-    let (result1, result2) = part1(&content);
+    let (result1, result2) = list_comparison(&data);
     let duration = start.elapsed();
     println!(
         "Part 1 result: {result1}\n\
@@ -14,16 +14,16 @@ fn main() {
     println!("Execution took {:?}", duration)
 }
 
-fn part1(content: &str) -> (i32, i32) {
+fn list_comparison(data: &str) -> (i32, i32) {
     let mut first: Vec<i32> = vec!();
     let mut second: Vec<i32> = vec!();
 
-    for line in content.lines() {
+    for line in data.lines() {
         let parts: Vec<i32> = line.split("   ").map(|x| x.parse().unwrap()).collect();
         first.push(parts[0]);
         second.push(parts[1]);
     }
-
+    
     first.sort();
     second.sort();
 
