@@ -1,18 +1,19 @@
-use aoc2024_rust::aoc_reader;
-use std::time::Instant;
 use num::abs;
+use std::time::{Duration, Instant};
+use crate::Solution;
 
-fn main() {
-    let data = aoc_reader(1);
-    let start = Instant::now(); // skip file IO in timing
-    let (result1, result2) = list_comparison(&data);
-    let duration = start.elapsed();
-    println!(
-        "Part 1 result: {result1}\n\
-         Part 2 result: {result2}"
-    );
-    println!("Execution took {:?}", duration)
+
+pub struct Day01 {}
+
+impl Solution for Day01 {
+    fn timed_solution(&self,data: &str) -> (i32, i32, Duration) {
+        let start = Instant::now(); // skip file IO in timing
+        let (result1, result2) = list_comparison(data);
+        let duration = start.elapsed();
+        (result1, result2, duration)
+    }
 }
+
 
 fn list_comparison(data: &str) -> (i32, i32) {
     let mut first: Vec<i32> = vec!();
@@ -23,7 +24,7 @@ fn list_comparison(data: &str) -> (i32, i32) {
         first.push(parts[0]);
         second.push(parts[1]);
     }
-    
+
     first.sort();
     second.sort();
 
@@ -34,6 +35,6 @@ fn list_comparison(data: &str) -> (i32, i32) {
     for number in first {
         similarity_score += second.iter().filter(|&x| *x == number).count() as i32 * number;
     }
-    
+
     (diff, similarity_score)
 }
