@@ -6,8 +6,8 @@ use aoc2024_rust::{
 };
 
 fn main() {
-    let day = 1;
-    let runtime = 5f64;
+    let day = 3;
+    let runtime = 1f64;
     let data = aoc_reader(&day);
     let solution = get_solution(&day).expect("Unable to get solution");
     let (result1, result2, time) = solution.timed_solution(&data);
@@ -16,6 +16,7 @@ fn main() {
          Part 1 result: {result1}\n\
          Part 2 result: {result2}"
     );
+
     let repeat_count = (runtime /time.as_secs_f64()) as i64;
     let mut total_time = Duration::new(0, 0);
     total_time += time;
