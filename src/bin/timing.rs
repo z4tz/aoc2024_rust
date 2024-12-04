@@ -6,7 +6,7 @@ use aoc2024_rust::{
 };
 
 fn main() {
-    let day = 3;
+    let day = 4;
     let runtime = 1f64;
     let data = aoc_reader(&day);
     let solution = get_solution(&day).expect("Unable to get solution");
@@ -16,7 +16,6 @@ fn main() {
          Part 1 result: {result1}\n\
          Part 2 result: {result2}"
     );
-
     let repeat_count = (runtime /time.as_secs_f64()) as i64;
     let mut total_time = Duration::new(0, 0);
     total_time += time;
@@ -33,6 +32,7 @@ fn get_solution(day:&i8) -> Option<Box<dyn Solution>> {
         1 => Some(Box::new(days::day01::Day01{})),
         2 => Some(Box::new(days::day02::Day02{})),
         3 => Some(Box::new(days::day03::Day03{})),
+        4 => Some(Box::new(days::day04::Day04{})),
         _ => None
     }
 }
