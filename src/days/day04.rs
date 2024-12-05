@@ -21,11 +21,11 @@ fn find_xmas(data: &str) -> (i32, i32) {
     //part 1
     let mut xmas_count = 0;
     //columns
-    for window in  arr.windows((4,1)).into_iter() {
+    for window in arr.windows((4,1)).into_iter() {
         xmas_count += match_xmas(&window.iter().collect::<String>());
     }
     //rows
-    for window in  arr.windows((1,4)).into_iter() {
+    for window in arr.windows((1,4)).into_iter() {
         xmas_count += match_xmas(&window.iter().collect::<String>());
     }
     //diagonals
