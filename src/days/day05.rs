@@ -50,10 +50,10 @@ fn sort_pages(pages: &mut Vec<i32>, rules: &Vec<Vec<i32>>) -> bool {
         sorted = true;
         for rule in rules {
             if pages.contains(&rule[0]) && pages.contains(&rule[1]) {
-                let a = pages.iter().position(|&x| x == rule[0]).unwrap();
-                let b = pages.iter().position(|&x| x == rule[1]).unwrap();
-                if a > b {
-                    pages.swap(a, b);
+                let index_a = pages.iter().position(|&page| page == rule[0]).unwrap();
+                let index_b = pages.iter().position(|&page| page == rule[1]).unwrap();
+                if index_a > index_b {
+                    pages.swap(index_a, index_b);
                     sorted = false;
                     has_changed = true;
                 }
