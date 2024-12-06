@@ -6,25 +6,25 @@ use aoc2024_rust::{
 };
 
 fn main() {
-    let day = 5;
-    let runtime = 1f64;
+    let day = 6;
+    let runtime = 1;
     let data = aoc_reader(&day);
     let solution = get_solution(&day).expect("Unable to get solution");
-    let (result1, result2, time) = solution.timed_solution(&data);
+    let (result1, result2, mut time) = solution.timed_solution(&data);
     println!(
         "Solving day {day}\n\
          Part 1 result: {result1}\n\
          Part 2 result: {result2}"
     );
-    let repeat_count = (runtime /time.as_secs_f64()) as i64;
-    let mut total_time = Duration::new(0, 0);
-    total_time += time;
-    for _ in 0..repeat_count {
-        let (_, _, time) = solution.timed_solution(&data);
-        total_time += time;
+    let mut run_count = 1;
+    while time < Duration::from_secs(runtime) {
+        let (_, _, new_time) = solution.timed_solution(&data);
+        time += new_time;
+        run_count += 1;
     }
-    let avg_time = total_time / (repeat_count+1) as u32;
-    println!("Average time {:?} over {} attempts", avg_time, repeat_count + 1);
+
+    let avg_time = time / (run_count);
+    println!("Average time {:?} over {} attempts", avg_time, run_count);
 }
 
 fn get_solution(day:&i8) -> Option<Box<dyn Solution>> {
