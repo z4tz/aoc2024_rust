@@ -2,6 +2,7 @@ use std::collections::{HashSet};
 use crate::Solution;
 use std::time::{Duration, Instant};
 use num::Complex;
+use rayon::prelude::*;
 
 pub struct Day06 {}
 
@@ -21,7 +22,7 @@ struct Guard {
 }
 impl Guard {
     fn new(position: Complex<i32>) -> Guard {
-        Guard { position: position.clone(), direction: Complex::new(0, -1) }
+        Guard { position, direction: Complex::new(0, -1) }
     }
     fn step(&mut self) {
         self.position += self.direction
@@ -57,25 +58,32 @@ fn guard_patterns(data: &str) -> (i32, i32) {
             guard.turn();
         }
     }
+    let visited_count = visited.len() as i32;
 
-    let mut obstacle_count = 0;
-    for position in &visited {
-        let tempobstacle = position.clone();
-        let mut guard = Guard::new(startposition);
-        let mut visited_with_direction: HashSet<(Complex<i32>, Complex<i32>)> = HashSet::new();
+    let obstacle_count = visited.into_par_iter()
+        .map(|x| {
+            let mut obstacles_clone = obstacles.clone();
+            detect_loop(&mut obstacles_clone, startposition, dimensions, x)
+        })
+        .sum();
 
-        while guard.position.re >= 0 && guard.position.im >= 0 && guard.position.re < dimensions && guard.position.im < dimensions {
-            visited_with_direction.insert((guard.position.clone(), guard.direction.clone()));
+        (visited_count,obstacle_count)
+}
 
-            guard.step();
-            while obstacles.contains(&(guard.position + guard.direction)) || tempobstacle == (guard.position + guard.direction) {
-                guard.turn();
-            }
-            if visited_with_direction.contains(&(guard.position, guard.direction)) {
-                obstacle_count += 1;
-                break;
-            }
+fn detect_loop(obstacles: &mut HashSet<Complex<i32>>, startposition: Complex<i32>, dimensions: i32, tempobstacle: Complex<i32>) -> i32{
+    let mut guard = Guard::new(startposition);
+    let mut visited_with_direction: HashSet<(Complex<i32>, Complex<i32>)> = HashSet::new();
+
+    while guard.position.re >= 0 && guard.position.im >= 0 && guard.position.re < dimensions && guard.position.im < dimensions {
+        visited_with_direction.insert((guard.position.clone(), guard.direction.clone()));
+
+        guard.step();
+        while obstacles.contains(&(guard.position + guard.direction)) || tempobstacle == (guard.position + guard.direction) {
+            guard.turn();
+        }
+        if visited_with_direction.contains(&(guard.position, guard.direction)) {
+            return 1
         }
     }
-    (visited.len() as i32 ,obstacle_count )
+    0
 }
