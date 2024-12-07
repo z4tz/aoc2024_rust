@@ -5,7 +5,7 @@ use regex::Regex;
 pub struct Day03 {}
 
 impl Solution for Day03 {
-    fn timed_solution(&self, data: &str) -> (i32, i32, Duration) {
+    fn timed_solution(&self, data: &str) -> (String, String, Duration) {
         let start = Instant::now(); // skip file IO in timing
         let (result1, result2) = corrupted_multiplications(data);
         let duration = start.elapsed();
@@ -13,7 +13,7 @@ impl Solution for Day03 {
     }
 }
 
-fn corrupted_multiplications(data: &str) -> (i32, i32) {
+fn corrupted_multiplications(data: &str) -> (String, String) {
 
     let mul_re = Regex::new(r"mul\((\d{1,3}),(\d{1,3})\)").unwrap();
     let total = mul_re.captures_iter(&data)
@@ -30,5 +30,5 @@ fn corrupted_multiplications(data: &str) -> (i32, i32) {
             .sum::<i32>())
         .sum::<i32>();
 
-    (total,total2)
+    (total.to_string(),total2.to_string())
 }

@@ -7,7 +7,7 @@ use rayon::prelude::*;
 pub struct Day06 {}
 
 impl Solution for Day06 {
-    fn timed_solution(&self, data: &str) -> (i32, i32, Duration) {
+    fn timed_solution(&self, data: &str) -> (String, String, Duration) {
         let start = Instant::now(); // skip file IO in timing
         let (result1, result2) = guard_patterns(data);
         let duration = start.elapsed();
@@ -32,7 +32,7 @@ impl Guard {
     }
 }
 
-fn guard_patterns(data: &str) -> (i32, i32) {
+fn guard_patterns(data: &str) -> (String, String) {
     let mut visited:HashSet<Complex<i32>> = HashSet::new();
     let mut obstacles:HashSet<Complex<i32>> = HashSet::new();
     let mut startposition = Complex::new(0, 0);
@@ -60,14 +60,14 @@ fn guard_patterns(data: &str) -> (i32, i32) {
     }
     let visited_count = visited.len() as i32;
 
-    let obstacle_count = visited.into_par_iter()
+    let obstacle_count:i32 = visited.into_par_iter()
         .map(|x| {
             let mut obstacles_clone = obstacles.clone();
             detect_loop(&mut obstacles_clone, startposition, dimensions, x)
         })
         .sum();
 
-        (visited_count,obstacle_count)
+        (visited_count.to_string(),obstacle_count.to_string())
 }
 
 fn detect_loop(obstacles: &mut HashSet<Complex<i32>>, startposition: Complex<i32>, dimensions: i32, tempobstacle: Complex<i32>) -> i32{

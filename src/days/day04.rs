@@ -5,7 +5,7 @@ use std::time::{Duration, Instant};
 pub struct Day04 {}
 
 impl Solution for Day04 {
-    fn timed_solution(&self, data: &str) -> (i32, i32, Duration) {
+    fn timed_solution(&self, data: &str) -> (String, String, Duration) {
         let start = Instant::now(); // skip file IO in timing
         let (result1, result2) = find_xmas(data);
         let duration = start.elapsed();
@@ -13,7 +13,7 @@ impl Solution for Day04 {
     }
 }
 
-fn find_xmas(data: &str) -> (i32, i32) {
+fn find_xmas(data: &str) -> (String, String) {
     let dimension = data.lines().count();
     let char_vector :Vec<char> = data.replace("\r\n","").chars().collect();
     let arr = Array::from_shape_vec((dimension,dimension),char_vector).unwrap();
@@ -45,7 +45,7 @@ fn find_xmas(data: &str) -> (i32, i32) {
             mas_count += 1;
         }
     }
-    (xmas_count,mas_count)
+    (xmas_count.to_string(),mas_count.to_string())
 }
 
 fn match_xmas(s: &str) -> i32 {

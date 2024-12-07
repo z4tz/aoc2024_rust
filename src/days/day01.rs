@@ -6,7 +6,7 @@ use crate::Solution;
 pub struct Day01 {}
 
 impl Solution for Day01 {
-    fn timed_solution(&self,data: &str) -> (i32, i32, Duration) {
+    fn timed_solution(&self, data: &str) -> (String, String, Duration) {
         let start = Instant::now(); // skip file IO in timing
         let (result1, result2) = list_comparison(data);
         let duration = start.elapsed();
@@ -15,7 +15,7 @@ impl Solution for Day01 {
 }
 
 
-fn list_comparison(data: &str) -> (i32, i32) {
+fn list_comparison(data: &str) -> (String, String) {
     let mut first: Vec<i32> = vec!();
     let mut second: Vec<i32> = vec!();
 
@@ -36,5 +36,5 @@ fn list_comparison(data: &str) -> (i32, i32) {
         similarity_score += second.iter().filter(|&x| *x == number).count() as i32 * number;
     }
 
-    (diff, similarity_score)
+    (diff.to_string(), similarity_score.to_string())
 }

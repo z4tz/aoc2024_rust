@@ -5,7 +5,7 @@ use std::time::{Duration, Instant};
 pub struct Day23 {}
 
 impl Solution for Day23 {
-    fn timed_solution(&self, data: &str) -> (i32, i32, Duration) {
+    fn timed_solution(&self, data: &str) -> (String, String, Duration) {
         let start = Instant::now(); // skip file IO in timing
         let (result1, result2) = problem_name(data);
         let duration = start.elapsed();
@@ -13,8 +13,8 @@ impl Solution for Day23 {
     }
 }
 
-fn problem_name(_data: &str) -> (i32, i32) {
+fn problem_name(_data: &str) -> (String, String) {
 
-    (1,2)
+    (String::new(), String::new())
 }
 

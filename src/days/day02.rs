@@ -4,7 +4,7 @@ use crate::Solution;
 pub struct Day02 {}
 
 impl Solution for Day02 {
-    fn timed_solution(&self, data: &str) -> (i32, i32, Duration) {
+    fn timed_solution(&self, data: &str) -> (String, String, Duration) {
         let start = Instant::now(); // skip file IO in timing
         let (result1, result2) = safe_report_count(data);
         let duration = start.elapsed();
@@ -12,7 +12,7 @@ impl Solution for Day02 {
     }
 }
 
-fn safe_report_count(data: &str) -> (i32, i32) {
+fn safe_report_count(data: &str) -> (String, String) {
     let mut safe_reports_1 = 0;
     let mut safe_reports_2 = 0;
     for line in data.lines() {
@@ -35,7 +35,7 @@ fn safe_report_count(data: &str) -> (i32, i32) {
             }
         }
     }
-    (safe_reports_1, safe_reports_2)
+    (safe_reports_1.to_string(), safe_reports_2.to_string())
 }
 
 fn is_safe(numbers: Vec<i32>) -> bool {

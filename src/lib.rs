@@ -17,5 +17,5 @@ pub fn aoc_reader(day: &i8) -> String {
 
 
 pub trait Solution {
-    fn timed_solution(&self, data: &str) -> (i32, i32, Duration);
+    fn timed_solution(&self, data: &str) -> (String, String, Duration);
 }

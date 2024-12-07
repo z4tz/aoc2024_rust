@@ -4,7 +4,7 @@ use std::time::{Duration, Instant};
 pub struct Day05 {}
 
 impl Solution for Day05 {
-    fn timed_solution(&self, data: &str) -> (i32, i32, Duration) {
+    fn timed_solution(&self, data: &str) -> (String, String, Duration) {
         let start = Instant::now(); // skip file IO in timing
         let (result1, result2) = page_ordering(data);
         let duration = start.elapsed();
@@ -12,7 +12,7 @@ impl Solution for Day05 {
     }
 }
 
-fn page_ordering(data: &str) -> (i32, i32) {
+fn page_ordering(data: &str) -> (String, String) {
     let mut rules :Vec<Vec<i32>> = vec![];
     let mut manuals :Vec<Vec<i32>> = vec![];
 
@@ -40,7 +40,7 @@ fn page_ordering(data: &str) -> (i32, i32) {
             true => sorted_middle_page_sum += pages[middle_index] // part 2
         }
     }
-    (middle_page_sum,sorted_middle_page_sum)
+    (middle_page_sum.to_string(),sorted_middle_page_sum.to_string())
 }
 
 fn sort_pages(pages: &mut Vec<i32>, rules: &Vec<Vec<i32>>) -> bool {
