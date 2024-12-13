@@ -1,8 +1,7 @@
-use std::collections::HashSet;
-use ndarray::Array;
+use std::iter::Cycle;
+use std::slice::Iter;
 use crate::Solution;
 use std::time::{Duration, Instant};
-use itertools::Itertools;
 
 pub struct Day09 {}
 
@@ -16,49 +15,38 @@ impl Solution for Day09 {
 }
 
 fn problem_name(data: &str) -> (String, String) {
-    let dimension = data.lines().count();
-    let int_vector = data.replace("\r\n","").chars().flat_map(|c| c.to_digit(10)).collect::<Vec<u32>>();
-    let arr = Array::from_shape_vec((dimension,dimension),int_vector).unwrap();
-    let mut score = 0;
-    let starting_positions = arr.iter().positions(|&e|e == 0).map(|i|index_to_pos(i, dimension)).collect::<Vec<_>>();
-    for start_position in starting_positions {
-        let mut current_positions = HashSet::from([start_position]);
-        for i in 1..10 {
-            let mut next_positions = HashSet::new();
-            println!("Checking the following positions {current_positions:?}");
-            for position in &current_positions {
-                for neighbor in get_neighbours(*position) {
-                    //println!("Checking position {neighbor:?} for {i:?}");
-                    if arr.get(neighbor).unwrap_or(&0) == &i {
-                        println!("{neighbor:?} is a match for {i}");
-                        next_positions.insert(neighbor);
-                    }
-                }
-                println!("");
-            }
-            current_positions.clear();
-            current_positions.extend(next_positions.clone());
 
-
-
-
+    let numbers = data.chars().map(|c| c.to_digit(10).unwrap() as i32).collect::<Vec<i32>>();
+    let mut reverse_files = vec![];
+    for (i, file) in numbers.iter().step_by(2).enumerate().rev() {
+        for _ in 0..*file {
+            reverse_files.push(i as i32);
         }
-        score += current_positions.len();
     }
+    let mut files = vec![];
+    for (i, file) in numbers.iter().step_by(2).enumerate() {
+        for _ in 0..*file {
+            files.push(i as i32);
+        }
+    }
+    let max_count = files.len() as i32-1;
+    let mut count:i32 = 0;
+    let mut numbers_iter = numbers.iter();
+    let mut iterators = [files.iter(), reverse_files.iter()];
+    let mut indicies:Cycle<Iter<usize>>  = [0, 1].iter().cycle();
 
+    let mut checksum:i64 = 0;
+    'outer: loop {
+        let iterator = &mut iterators[*indicies.next().unwrap()];
 
-
-    (score.to_string(), String::new())
-}
-type Position = (usize, usize);
-fn get_neighbours(p: Position) -> impl Iterator<Item = Position> {
-    let m_range = if p.0 > 0 { p.0 - 1..p.0 + 2 } else { 0..2 };
-    let n_range = if p.1 > 0 { p.1 - 1..p.1 + 2 } else { 0..2 };
-    m_range
-        .flat_map(move |m| n_range.clone().map(move |n| (m, n)))
-        .filter(move |&q| p != q)
-}
-
-fn index_to_pos(i: usize, dimension: usize) -> Position {
-    Position::from((i/dimension,i%dimension))
+        for _ in 0..*numbers_iter.next().unwrap() {
+            let num = *iterator.next().unwrap();
+            checksum += (num * count) as i64;
+            if count >= max_count{
+                break 'outer;
+            }
+            count += 1;
+        }
+    }
+    (checksum.to_string(), String::new())
 }

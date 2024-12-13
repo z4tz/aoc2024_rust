@@ -16,7 +16,6 @@ fn main() {
          Part 1 result: {result1}\n\
          Part 2 result: {result2}"
     );
-    return;
     let mut run_count = 1;
     while time < Duration::from_secs(runtime) {
         let (_, _, new_time) = solution.timed_solution(&data);

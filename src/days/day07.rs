@@ -20,14 +20,13 @@ fn calibration_results(data: &str) -> (String, String) {
     let operators_part1 = vec![multiply, add];
     let operators_part2 = vec![multiply, add, concat];
 
-    
     let mut calibration1 = 0;
     let mut calibration2 = 0;
     for line in data.lines() {
         let parts = line.split(": ").collect::<Vec<&str>>();
         let result = parts[0].parse::<i64>().unwrap();
         let numbers= parts[1].split(" ").map(|x| x.parse::<i64>().unwrap()).collect::<Vec<i64>>();
-        
+
         if valid_calibration(&operators_part1, result, &numbers) {
             calibration1 += result;
         }
