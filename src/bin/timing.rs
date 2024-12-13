@@ -6,7 +6,7 @@ use aoc2024_rust::{
 };
 
 fn main() {
-    let day = 8;
+    let day = 9;
     let runtime = 1;
     let data = aoc_reader(&day);
     let solution = get_solution(&day).expect("Unable to get solution");
@@ -16,6 +16,7 @@ fn main() {
          Part 1 result: {result1}\n\
          Part 2 result: {result2}"
     );
+    return;
     let mut run_count = 1;
     while time < Duration::from_secs(runtime) {
         let (_, _, new_time) = solution.timed_solution(&data);
