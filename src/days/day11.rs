@@ -7,13 +7,13 @@ pub struct Day11 {}
 impl Solution for Day11 {
     fn timed_solution(&self, data: &str) -> (String, String, Duration) {
         let start = Instant::now(); // skip file IO in timing
-        let (result1, result2) = problem_name(data);
+        let (result1, result2) = stone_counting(data);
         let duration = start.elapsed();
         (result1, result2, duration)
     }
 }
 
-fn problem_name(data: &str) -> (String, String) {
+fn stone_counting(data: &str) -> (String, String) {
     let mut stones:HashMap<i64, i64> = HashMap::new();
 
     for number in data.split_ascii_whitespace().map(|x| x.parse::<i64>().unwrap()) {
