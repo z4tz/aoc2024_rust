@@ -19,3 +19,20 @@ pub fn aoc_reader(day: &i8) -> String {
 pub trait Solution {
     fn timed_solution(&self, data: &str) -> (String, String, Duration);
 }
+
+#[macro_export]
+macro_rules! pause {
+    () => {
+        println!(
+            "[{}:{}] Pausing! Press enter to continue...",
+            file!(),
+            line!()
+        );
+
+        let mut buffer = String::new();
+
+        std::io::stdin()
+            .read_line(&mut buffer)
+            .expect("Failed to read line");
+    };
+}
