@@ -3,7 +3,7 @@ use crate::{Solution, pause};
 use std::time::{Duration, Instant};
 use itertools::Itertools;
 use ndarray::Array2;
-use num::{abs, Complex};
+use num::Complex;
 
 pub struct Day15 {}
 
@@ -126,7 +126,6 @@ fn try_move_box(box_index: usize, direction: Complex<i32>, walls: &HashSet<Compl
     movable_boxes
 }
 
-
 fn print_state(position: &Complex<i32>, walls: &HashSet<Complex<i32>>, boxes: &Vec<Boxx>, dimensions: (usize, usize)) {
     let mut image = Array2::from_elem(dimensions, '.');
     for wall in walls {
@@ -142,5 +141,4 @@ fn print_state(position: &Complex<i32>, walls: &HashSet<Complex<i32>>, boxes: &V
     println!("{}", image.to_string().replace(", ",""));
     println!(" ");
     pause!();
-
 }
