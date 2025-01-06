@@ -6,7 +6,7 @@ use aoc2024_rust::{
 };
 
 fn main() {
-    let day = 17;
+    let day = 18;
     let runtime = 1;
     let data = aoc_reader(&day);
     let solution = get_solution(&day).expect("Unable to get solution");
