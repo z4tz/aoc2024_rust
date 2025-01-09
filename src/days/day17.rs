@@ -19,15 +19,13 @@ fn octal_computer(data: &str) -> (String, String) {
     let mut parts = data.split("\r\n\r\n");
     let register_string = parts.next().unwrap();
     let temp = register_string.lines().map(|s| s.split(" ").last().unwrap().to_string().parse::<i64>().unwrap()).collect_vec();
-    let mut registers = [temp[0], temp[1], temp[2]];
+    let registers = [temp[0], temp[1], temp[2]];
 
     let program_string = parts.next().unwrap().split(" ").skip(1).next().unwrap();
     let program = program_string.split(",").map(|s| s.parse::<i64>().unwrap()).collect::<Vec<i64>>();
     let result1 = run_program(registers, &program);
-    registers[0] = pow(2, 45);
 
-    let result2 = find_recursive(pow(2, 45), 13, &program);
-
+    let result2 = find_recursive(pow(2, 45), 13, &program); // found 2^45 by trial and error by checking correct length of response.
 
     (result1.iter().join(","),result2.to_string())
 }
