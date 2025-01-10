@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 use crate::Solution;
 use std::time::{Duration, Instant};
-use itertools::{enumerate, Itertools};
+use itertools::enumerate;
 use num::Complex;
 
 pub struct Day20 {}
